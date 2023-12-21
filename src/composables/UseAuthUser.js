@@ -14,8 +14,10 @@ export default function useAuthUser() {
    * Login with email and password
    */
 
-  const loginUser = async ({ email, password }) => {
-    const { user: authenticatedUser, error } = await supabase.auth.signIn({ email, password });
+  const login = async ({ email, password }) => {
+    const { authenticatedUser, error } = await supabase.auth
+      .signInWithPassword({ email, password });
+
     if (error) throw error;
     return authenticatedUser;
   };
@@ -45,17 +47,15 @@ export default function useAuthUser() {
   /**
    * Register
    */
-  const register = async ({ email, password, ...meta }) => {
-    const { user: registeredUser, error } = await supabase.auth.signUp(
-      { email, password },
+  const register = async ({ email, password, ...data }) => {
+    const { registeredUser, error } = await supabase.auth.signUp(
       {
-        // arbitrary meta data is passed as the second argument under a data key
-        // to the Supabase signUp method
-        data: meta,
-        // the to redirect to after the user confirms their email
-        // window.location wouldn't be available if we were rendering server side
-        // but since we're all on the client it will work fine
-        redirectTo: `${window.location.origin}/me?fromEmail=registrationConfirmation"`,
+        email,
+        password,
+        options: {
+          data: { ...data },
+          emailRedirectTo: `${window.location.origin}/me?fromEmail=registrationConfirmation`,
+        },
       },
     );
     if (error) throw error;
@@ -66,7 +66,7 @@ export default function useAuthUser() {
    * Update user email, password, or meta data
    */
   const update = async (data) => {
-    const { user: updatedUser, error } = await supabase.auth.update(data);
+    const { updatedUser, error } = await supabase.auth.update(data);
     if (error) throw error;
     return updatedUser;
   };
@@ -82,7 +82,7 @@ export default function useAuthUser() {
   };
 
   const resetPassword = async (accessToken, newPassword) => {
-    const { user: userAfterReset, error } = await supabase.auth.api.updateUser(
+    const { userAfterReset, error } = await supabase.auth.api.updateUser(
       accessToken,
       { password: newPassword },
     );
@@ -92,7 +92,7 @@ export default function useAuthUser() {
 
   return {
     user,
-    login: loginUser,
+    login,
     loginWithSocialProvider,
     isLoggedIn,
     logout,
