@@ -30,7 +30,6 @@ module.exports = configure((/* ctx */) => ({
   // https://v2.quasar.dev/quasar-cli-vite/boot-files
   boot: [
     'supabase',
-
     'axios',
   ],
 
@@ -60,7 +59,7 @@ module.exports = configure((/* ctx */) => ({
       node: 'node16',
     },
 
-    vueRouterMode: 'hash', // available values: 'hash', 'history'
+    vueRouterMode: 'history', // available values: 'hash', 'history'
     // vueRouterBase,
     // vueDevtools,
     // vueOptionsAPI: false,
