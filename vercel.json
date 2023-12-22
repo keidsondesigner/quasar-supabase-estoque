@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/me",
+      "destination": "https://quasar-supabase-estoque.vercel.app/me"
     }
   ]
 }
