@@ -54,8 +54,7 @@ export default function useAuthUser() {
         password,
         options: {
           data: { ...data },
-          emailRedirectTo: 'https://quasar-supabase-estoque.vercel.app/me?fromEmail=registrationConfirmation',
-          // emailRedirectTo: `${window.location.origin}/me?fromEmail=registrationConfirmation`,
+          emailRedirectTo: `${window.location.origin}/me?fromEmail=registrationConfirmation`,
         },
       },
     );
