@@ -2,6 +2,7 @@ import { route } from 'quasar/wrappers';
 import {
   createRouter, createMemoryHistory, createWebHistory, createWebHashHistory,
 } from 'vue-router';
+import useAuthUser from 'src/composables/UseAuthUser';
 import routes from './routes';
 
 /*
@@ -26,6 +27,15 @@ export default route((/* { store, ssrContext } */) => {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  // eslint-disable-next-line consistent-return
+  Router.beforeEach((to) => {
+    const { isLoggedIn } = useAuthUser();
+
+    if (!isLoggedIn() && to.meta.requiresAuth && !Object.keys(to.query).includes('fromEmail')) {
+      return { name: 'login' };
+    }
   });
 
   return Router;
