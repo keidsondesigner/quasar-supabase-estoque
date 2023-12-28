@@ -9,6 +9,7 @@
         <q-input label="Email" v-model="formRegister.email" />
         <q-input label="Password" v-model="formRegister.password" />
         <q-btn class="full-width" label="Register" color="primary" type="submit" />
+        <q-btn class="full-width" label="Voltar" color="primary" flat to="/" />
       </div>
     </q-form>
   </q-page>

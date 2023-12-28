@@ -76,18 +76,20 @@ export default function useAuthUser() {
    * (ie. support "Forgot Password?")
    */
   const sendPasswordResetEmail = async (email) => {
-    const { user: userWithEmail, error } = await supabase.auth.api.resetPasswordForEmail(email);
+    console.log(email);
+    // eslint-disable-next-line no-shadow
+    const { user, error } = await supabase.auth.resetPasswordForEmail(email);
     if (error) throw error;
-    return userWithEmail;
+    return user;
   };
 
-  const resetPassword = async (accessToken, newPassword) => {
-    const { userAfterReset, error } = await supabase.auth.api.updateUser(
-      accessToken,
+  const resetPassword = async (newPassword) => {
+    // eslint-disable-next-line no-shadow
+    const { user, error } = await supabase.auth.updateUser(
       { password: newPassword },
     );
     if (error) throw error;
-    return userAfterReset;
+    return user;
   };
 
   return {
