@@ -10,7 +10,7 @@
 
         <q-btn-dropdown flat color="white" icon="person">
           <q-list>
-            <q-item clickable v-class-popup @click="handleLogout">
+            <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section>
                 <q-item-label>
                   Sair
