@@ -6,7 +6,13 @@
     >
       <p class="col-12 text-h6 text-center">Digite seu email, para recuperar sua senha</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
-        <q-input label="Email" v-model="email" />
+        <q-input
+          label="Email"
+          v-model="email"
+          type="email"
+          lazy-rules
+          :rules="emailRules"
+        />
         <q-btn
           class="full-width"
           label="Enviar"
@@ -22,6 +28,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import useAuthUser from 'src/composables/UseAuthUser';
+import { validateEmail } from 'src/utils/ValidateForm';
 
 export default defineComponent({
   name: 'ForgotPasswordPage',
@@ -43,6 +50,11 @@ export default defineComponent({
     return {
       email,
       handleForgotPassword,
+
+      emailRules: [
+        (val) => val.length || 'email obrigatório',
+        (val) => validateEmail(val) || 'email inválido',
+      ],
     };
   },
 });

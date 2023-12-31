@@ -6,7 +6,12 @@
     >
       <p class="col-12 text-h6 text-center">Digite sua nova senha</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
-        <q-input label="Nova senha" v-model="password" />
+        <q-input
+          label="Nova senha"
+          v-model="password"
+          lazy-rules
+          :rules="passwordRules"
+        />
         <q-btn
           class="full-width"
           label="Recuperar senha"
@@ -46,6 +51,11 @@ export default defineComponent({
     return {
       password,
       handleResetPassword,
+
+      passwordRules: [
+        (val) => val.length || 'senha obrigatória',
+        (val) => val.length > 5 || 'senha deve conter 6 ou mais caracters',
+      ],
     };
   },
 });
