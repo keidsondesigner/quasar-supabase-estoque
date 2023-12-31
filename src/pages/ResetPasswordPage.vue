@@ -1,23 +1,16 @@
 <template>
   <q-page padding>
-    <q-form
-      class="row justify-center"
-      @submit.prevent="handleResetPassword"
-    >
+    <q-form class="row justify-center" @submit.prevent="handleResetPassword">
       <p class="col-12 text-h6 text-center">Digite sua nova senha</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
         <q-input
           label="Nova senha"
           v-model="password"
+          type="password"
           lazy-rules
           :rules="passwordRules"
         />
-        <q-btn
-          class="full-width"
-          label="Recuperar senha"
-          color="primary"
-          type="submit"
-        />
+        <q-btn class="full-width" label="Recuperar senha" color="primary" type="submit" />
         <q-btn class="full-width" label="Voltar" color="primary" flat to="/" />
       </div>
     </q-form>
@@ -28,12 +21,15 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useAuthUser from 'src/composables/UseAuthUser';
+import useNotify from 'src/composables/UseNotify';
 
 export default defineComponent({
   name: 'ResetPasswordPage',
 
   setup() {
     const { resetPassword } = useAuthUser();
+
+    const { notifyError, notifySuccess } = useNotify();
 
     const router = useRouter();
 
@@ -42,9 +38,10 @@ export default defineComponent({
     const handleResetPassword = async () => {
       try {
         await resetPassword(password.value);
+        notifySuccess('Senha alterada com sucesso!');
         router.push({ name: 'login' });
       } catch (error) {
-        console.log(error.message);
+        notifyError(error.message);
       }
     };
 
