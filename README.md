@@ -8,6 +8,11 @@ yarn
 # or
 npm install
 ```
+### *WARNING Before starting the project, it is necessary to configure the .env file at the project's root.
+```Supabase Environment
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
