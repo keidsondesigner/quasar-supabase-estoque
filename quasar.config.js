@@ -43,7 +43,7 @@ module.exports = configure((/* ctx */) => ({
     // 'ionicons-v4',
     // 'mdi-v5',
     // 'fontawesome-v6',
-    // 'eva-icons',
+    'eva-icons',
     // 'themify',
     // 'line-awesome',
     // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
@@ -93,12 +93,14 @@ module.exports = configure((/* ctx */) => ({
   framework: {
     config: {
       brand: {
-        primary: '#2c9c6a',
-        secondary: '#26A69A',
+        primary: '#3b82f6',
+        secondary: '#c08d34',
         accent: '#9C27B0',
-        dark: '#1d1d1d',
-        positive: '#21BA45',
-        negative: '#C10015',
+
+        dark: '#27272a',
+        'dark-page': '#121212',
+        positive: '#26a69a',
+        negative: '#cd0263',
         info: '#31CCEC',
         warning: '#F2C037',
       },

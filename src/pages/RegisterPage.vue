@@ -1,10 +1,10 @@
 <template>
-  <q-page padding>
+  <q-page padding class="container__page">
     <q-form class="row justify-center" @submit.prevent="handleSubmitRegister">
-      <p class="col-12 text-h6 text-center">
-        Register Page
+      <p class="col-12 text-h5 text-center text-bold text-dark">
+        Criar uma Conta
       </p>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
+      <div class="col-xs-10 q-gutter-y-lg">
         <q-input
           label="Nome"
           v-model="formRegister.name"
@@ -23,8 +23,22 @@
           lazy-rules
           :rules="passwordRules"
         />
-        <q-btn class="full-width" label="Register" color="primary" type="submit" />
-        <q-btn class="full-width" label="Voltar" color="primary" flat to="/" />
+        <q-btn
+          class="full-width text-subtitle1 text-bold"
+          label="Register"
+          color="primary"
+          type="submit"
+          no-caps
+          unelevated
+        />
+        <q-btn
+          class="full-width text-subtitle1"
+          label="Voltar"
+          color="dark"
+          no-caps
+          flat
+          to="/"
+        />
       </div>
     </q-form>
   </q-page>
@@ -86,3 +100,14 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+
+.container__page {
+  min-height: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

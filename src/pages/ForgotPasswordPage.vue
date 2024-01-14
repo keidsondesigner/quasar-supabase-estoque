@@ -1,11 +1,25 @@
 <template>
-  <q-page padding>
+  <q-page padding class="container__page">
     <q-form class="row justify-center" @submit.prevent="handleForgotPassword">
-      <p class="col-12 text-h6 text-center">Digite seu email, para recuperar sua senha</p>
+      <p class="col-12 text-h6 text-center">Digite seu email, <br>para recuperar sua senha</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
         <q-input label="Email" v-model="email" type="email" lazy-rules :rules="emailRules" />
-        <q-btn class="full-width" label="Enviar" color="primary" type="submit" />
-        <q-btn class="full-width" label="Voltar" color="primary" flat to="/" />
+        <q-btn
+          class="full-width text-bold q-py-xs text-subtitle1"
+          label="Enviar"
+          color="primary"
+          type="submit"
+          no-caps
+          unelevated
+        />
+        <q-btn
+          class="full-width text-subtitle1"
+          label="Voltar"
+          color="dark"
+          flat
+          no-caps
+          to="/"
+        />
       </div>
     </q-form>
   </q-page>
@@ -48,3 +62,13 @@ export default defineComponent({
   },
 });
 </script>
+<style lang="scss" scoped>
+.container__page {
+  min-height: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

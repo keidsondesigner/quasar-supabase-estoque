@@ -1,8 +1,8 @@
 <template>
-  <q-page padding>
+  <q-page padding class="container__page">
     <q-form class="row justify-center" @submit.prevent="handleSubmitLogin">
-      <p class="col-12 text-h6 text-center">Login Page</p>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
+      <p class="col-12 text-h5 text-center text-bold text-dark">Login Page</p>
+      <div class="col-xs-10 q-gutter-y-lg">
         <q-input
           label="Email"
           v-model="formLogin.email"
@@ -16,20 +16,29 @@
           type="password"
           lazy-rules
           :rules="passwordRules"
-          />
-        <q-btn class="full-width" label="Login" color="primary" type="submit" />
+        />
         <q-btn
-          class="full-width"
-          label="Recuperar senha"
+          class="full-width text-bold q-py-xs text-subtitle1"
+          label="Entrar"
           color="primary"
+          type="submit"
+          no-caps
+          unelevated
+        />
+        <q-btn
+          class="full-width text-subtitle1"
+          label="Recuperar senha"
+          color="dark"
           flat
+          no-caps
           to="/forgot-password"
         />
         <q-btn
-          class="full-width"
-          label="Registrar"
-          color="primary"
+          class="full-width text-subtitle1"
+          label="Criar conta"
+          color="dark"
           flat
+          no-caps
           to="/register"
         />
       </div>
@@ -91,3 +100,14 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.container__page {
+  min-height: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
