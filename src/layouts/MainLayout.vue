@@ -1,6 +1,7 @@
+<!-- eslint-disable max-len -->
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
@@ -8,7 +9,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <q-btn-dropdown flat color="white" icon="person">
+        <q-btn-dropdown flat color="white" icon="eva-person-outline">
           <q-list>
             <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section>
@@ -24,13 +25,26 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header>
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
-      </q-list>
+      <q-img class="absolute-top" style="height: 150px">
+        <!-- <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px"> -->
+        <div class="absolute-full bg-transparent flex items-center q-gutter-md">
+          <q-avatar size="56px" class="q-mb-sm">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          </q-avatar>
+          <div>
+            <div class="text-weight-bold text-dark">Olá! Bem vindo,</div>
+            <div class="text-dark">@keidsonroby</div>
+          </div>
+        </div>
+      </q-img>
+      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+        <q-list>
+          <q-item-label header>
+            Menu
+          </q-item-label>
+          <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
@@ -49,46 +63,16 @@ import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Home',
+    caption: '',
+    icon: 'eva-home-outline',
+    routeName: 'me',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Categoria',
+    caption: '',
+    icon: 'eva-layers-outline',
+    routeName: 'category',
   },
 ];
 
@@ -112,7 +96,8 @@ export default defineComponent({
       $q.dialog({
         title: 'Sair',
         message: 'Desejar sair do sistema?',
-        cancel: true,
+        cancel: { color: 'negative', label: 'cancelar', flat: true },
+        ok: { color: 'primary', label: 'confirmar', flat: true },
         persistent: true,
       }).onOk(async () => {
         await logout();
