@@ -1,8 +1,10 @@
 <template>
   <q-page padding class="container__page">
     <q-form class="row justify-center" @submit.prevent="handleForgotPassword">
-      <p class="col-12 text-h6 text-center">Digite seu email, <br>para recuperar sua senha</p>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-lg">
+      <p class="col-12 text-h6 text-center text-dark">
+          Digite seu email, <br>para recuperar sua senha
+      </p>
+      <div class="col-xs-10 q-gutter-y-lg">
         <q-input label="Email" v-model="email" type="email" lazy-rules :rules="emailRules" />
         <q-btn
           class="full-width text-bold q-py-xs text-subtitle1"
