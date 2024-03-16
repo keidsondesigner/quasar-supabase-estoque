@@ -72,7 +72,7 @@ const linksList = [
     title: 'Categoria',
     caption: '',
     icon: 'eva-layers-outline',
-    routeName: 'category',
+    routeName: 'list-category',
   },
 ];
 
