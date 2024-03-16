@@ -42,6 +42,7 @@
               color='negative'
               dense
               flat
+              @click="handleDeleteCategory(props.row)"
             >
               <q-tooltip> Excluír </q-tooltip>
             </q-btn>
@@ -54,9 +55,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import UseApiSupabase from 'src/composables/UseApiSupabase';
-import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router';
+
+import useApiSupabase from 'src/composables/UseApiSupabase';
+import useNotify from 'src/composables/UseNotify';
+
+import { useQuasar } from 'quasar';
 
 const columns = [
   {
@@ -75,18 +79,40 @@ const columns = [
   },
 ];
 
+const table = 'category';
+
 const categories = ref([]);
 const loading = ref(true);
 
-const { list } = UseApiSupabase();
-const { notifyError } = useNotify();
+const { list, remove } = useApiSupabase();
+const { notifyError, notifySuccess } = useNotify();
 
 const router = useRouter();
 
+const $q = useQuasar();
+
 async function handleListCategories() {
   try {
-    categories.value = await list('category');
+    categories.value = await list(table);
     loading.value = false;
+  } catch (error) {
+    notifyError(error.message);
+  }
+}
+
+async function handleDeleteCategory(category) {
+  try {
+    $q.dialog({
+      title: 'Confirmar',
+      message: `Desejar deletar a categoria ${category.name}?`,
+      cancel: { color: 'negative', label: 'cancelar', flat: true },
+      ok: { color: 'primary', label: 'confirmar', flat: true },
+      persistent: true,
+    }).onOk(async () => {
+      await remove(table, category.id); // Deletando categoria no Supabase;
+      notifySuccess('Categoria excluída com sucesso!');
+      handleListCategories(); // Recarregando a Lista de Categorias;
+    });
   } catch (error) {
     notifyError(error.message);
   }
