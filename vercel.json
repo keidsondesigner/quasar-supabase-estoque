@@ -19,6 +19,10 @@
     {
       "source": "/forgot-password",
       "destination": "/index.html"
+    },
+    {
+      "source": "/category",
+      "destination": "/index.html"
     }
   ]
 }
