@@ -27,7 +27,13 @@
         </template>
         <template v-slot:body-cell-actions='props'>
           <q-td :props='props' class='q-gutter-x-sm'>
-            <q-btn icon='eva-edit-2-outline' size='md' dense flat>
+            <q-btn
+              icon='eva-edit-2-outline'
+              size='md'
+              dense
+              flat
+              @click="handleEditCategory(props.row)"
+            >
               <q-tooltip> Editar </q-tooltip>
             </q-btn>
             <q-btn
@@ -50,6 +56,7 @@
 import { ref, onMounted } from 'vue';
 import UseApiSupabase from 'src/composables/UseApiSupabase';
 import useNotify from 'src/composables/UseNotify';
+import { useRouter } from 'vue-router';
 
 const columns = [
   {
@@ -74,6 +81,8 @@ const loading = ref(true);
 const { list } = UseApiSupabase();
 const { notifyError } = useNotify();
 
+const router = useRouter();
+
 async function handleListCategories() {
   try {
     categories.value = await list('category');
@@ -81,6 +90,11 @@ async function handleListCategories() {
   } catch (error) {
     notifyError(error.message);
   }
+}
+
+// Função que passa o parâmetro "id" do item clicado, pelo url da rota;
+function handleEditCategory(category) {
+  router.push({ name: 'form-category', params: { id: category.id } });
 }
 
 onMounted(() => {
