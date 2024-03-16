@@ -16,7 +16,7 @@
         />
         <q-btn
           class="full-width text-bold q-py-xs text-subtitle1"
-          label="Salvar"
+          :label="isUpdate ? 'Renomear' : 'Salvar'"
           color="primary"
           type="submit"
           no-caps
@@ -71,9 +71,12 @@ async function handleSubmit() {
       await update(table, form.value); // Atualizando categoria editada no Supabase;
       notifySuccess('Categoria editada com sucesso!');
       router.push({ name: 'list-category' });
+    } else {
+      notifySuccess('Categoria cadastrada com sucesso!');
+      await post(table, form.value); // Salvando categoria no Supabase;
     }
-    notifySuccess('Categoria cadastrada com sucesso!');
-    await post(table, form.value); // Salvando categoria no Supabase;
+    // Em caso de sucesso, ao editar ou salvar uma categoria,
+    // vou redirecionar para minha lista de categorias;
     router.push({ name: 'list-category' });
   } catch (error) {
     notifyError(error.message);
