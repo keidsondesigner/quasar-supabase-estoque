@@ -22,6 +22,7 @@
             label='Adicionar'
             icon='eva-plus-circle-outline'
             outline
+            :to="{ name: 'form-category' }"
           />
         </template>
         <template v-slot:body-cell-actions='props'>

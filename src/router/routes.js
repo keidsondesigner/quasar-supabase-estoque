@@ -1,5 +1,5 @@
 const routes = [
-  {
+  { // Rotas não Logadas
     path: '/',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
@@ -11,12 +11,13 @@ const routes = [
       { path: 'reset-password', name: 'reset-password', component: () => import('pages/ResetPasswordPage.vue') },
     ],
   },
-  {
+  { // Rotas Logadas
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'me', name: 'me', component: () => import('pages/MePage.vue') },
-      { path: 'category', name: 'category', component: () => import('pages/category/ListPage.vue') },
+      { path: 'list-category', name: 'list-category', component: () => import('pages/category/ListCategory.vue') },
+      { path: 'form-category', name: 'form-category', component: () => import('pages/category/FormCategory.vue') },
     ],
     meta: {
       requiresAuth: true,
