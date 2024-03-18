@@ -7,22 +7,11 @@
         {{ user.user_metadata.name }}
       </p>
     </div>
-
   </q-page>
 </template>
 
-<script>
+<script setup>
 import useAuthUser from 'src/composables/UseAuthUser';
-import { defineComponent } from 'vue';
 
-export default defineComponent({
-  name: 'MePage',
-  setup() {
-    const { user } = useAuthUser();
-
-    return {
-      user,
-    };
-  },
-});
+const { user } = useAuthUser();
 </script>
