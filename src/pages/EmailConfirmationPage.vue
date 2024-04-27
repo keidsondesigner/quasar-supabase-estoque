@@ -5,8 +5,9 @@
         Obrigado por se registrar!
       </h6>
       <p>
-        Por favor entre em sua caixa de email e confirme seu email
-        <strong>{{ $route.query.email }}</strong>, para finalizar o registro.
+        Para finalizar o registro.<br>
+        Por favor entre em sua caixa de email e confirme seu email.<br>
+        <strong>{{ $route.query.email }}</strong>
       </p>
       <q-btn
         class="full-width"

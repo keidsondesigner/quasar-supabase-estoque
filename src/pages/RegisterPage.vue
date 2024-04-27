@@ -23,6 +23,10 @@
           lazy-rules
           :rules="passwordRules"
         />
+        <q-file
+          v-model="avatarUrl.avatar"
+          label="Imagem"
+        />
         <q-btn
           class="full-width text-subtitle1 text-bold"
           label="Register"
@@ -44,61 +48,68 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useAuthUser from 'src/composables/UseAuthUser';
 import useNotify from 'src/composables/UseNotify';
 import { validateEmail } from 'src/utils/ValidateForm';
+import useSupabase from 'src/boot/supabase';
 
-export default defineComponent({
-  name: 'RegisterPage',
+const { supabase } = useSupabase();
 
-  setup() {
-    const router = useRouter();
+const router = useRouter();
 
-    const { register } = useAuthUser();
+const { register } = useAuthUser();
 
-    const { notifyError, notifySuccess } = useNotify();
+const { notifyError, notifySuccess } = useNotify();
 
-    const formRegister = ref({
-      name: '',
-      email: '',
-      password: '',
-    });
-
-    const handleSubmitRegister = async () => {
-      try {
-        await register(formRegister.value);
-        notifySuccess('Registro efetuado!');
-        router.push({
-          name: 'email-confirmation',
-          query: { email: formRegister.value.email },
-        });
-      } catch (error) {
-        notifyError(error.message);
-      }
-    };
-
-    return {
-      formRegister,
-      handleSubmitRegister,
-
-      nameRules: [
-        (val) => val.length || 'nome obrigatório',
-        (val) => val.length >= 5 || 'nome deve conter 5 ou mais caracters',
-      ],
-      emailRules: [
-        (val) => val.length || 'email obrigatório',
-        (val) => validateEmail(val) || 'email inválido',
-      ],
-      passwordRules: [
-        (val) => val.length || 'senha obrigatória',
-        (val) => val.length >= 6 || 'senha deve conter 6 ou mais caracters',
-      ],
-    };
-  },
+const formRegister = ref({
+  name: '',
+  email: '',
+  password: '',
+  admin: false,
 });
+const avatarUrl = ref({
+  avatar: null,
+});
+
+const nameRules = ref([
+  (val) => val.length || 'nome obrigatório',
+  (val) => val.length >= 5 || 'nome deve conter 5 ou mais caracters',
+]);
+const emailRules = ref([
+  (val) => val.length || 'email obrigatório',
+  (val) => validateEmail(val) || 'email inválido',
+]);
+const passwordRules = ref([
+  (val) => val.length || 'senha obrigatória',
+  (val) => val.length >= 6 || 'senha deve conter 6 ou mais caracters',
+]);
+
+const handleSubmitRegister = async () => {
+  try {
+    const filename = `public/avatar_${Date.now()}.${avatarUrl.value.avatar.name.split('.').pop()}`;
+    await supabase
+      .storage
+      .from('avatars')
+      .upload(filename, avatarUrl.value.avatar, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    await register(formRegister.value);
+    notifySuccess('Registro efetuado!');
+    avatarUrl.value.avatar = null;
+    router.push({
+      name: 'email-confirmation',
+      query: { email: formRegister.value.email },
+    });
+  } catch (error) {
+    notifyError(error.message);
+  }
+};
+
 </script>
 <style lang="scss" scoped>
 
