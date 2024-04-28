@@ -5,7 +5,7 @@
         class='col-12'
         title='Categoria'
         :rows='categories'
-        :columns='columns'
+        :columns='columnsConfig'
         :loading='loading'
         color='primary'
         row-key='id'
@@ -56,28 +56,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-
 import useApiSupabase from 'src/composables/UseApiSupabase';
 import useNotify from 'src/composables/UseNotify';
-
 import { useQuasar } from 'quasar';
-
-const columns = [
-  {
-    name: 'name',
-    field: 'name',
-    align: 'left',
-    label: 'Nome',
-    sortable: true,
-  },
-  {
-    name: 'actions',
-    field: 'actions',
-    align: 'right',
-    label: 'Ações',
-    sortable: true,
-  },
-];
+import { columnsConfig } from './tableConfig';
 
 const table = 'category';
 
