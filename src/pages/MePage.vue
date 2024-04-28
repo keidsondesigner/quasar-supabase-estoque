@@ -1,24 +1,31 @@
 <template>
   <q-page class="flex flex-center">
-    <div v-if="user">
-      <h6 class="text-weight-bold">
+    <section v-if="user && !user.user_metadata.admin">
+      <p class="no-margin">
         Olá {{ user.email }}
-        <br>
-        Meus alunos no sistema:
+      </p>
+      <h6 class="text-weight-bold no-margin">
+        Meu treino da Semana:
       </h6>
-      <section
-        v-if="user.user_metadata.admin"
+    </section>
+    <section
+        v-if="user && user.user_metadata.admin"
       >
+        <p class="no-margin">
+          Olá instrutor {{ user.email }}
+        </p>
+        <h6 class="text-weight-bold no-margin">
+          Meus alunos no sistema:
+        </h6>
         <div
           v-for="usuario in usuariosDoSistema" :key="usuario.id">
           <div>
             {{ usuario.nome }} - {{ usuario.email }}
           </div>
-          <img :src="usuario.avatar_user" style="width: 140px; height: 140px" >
+          <img :src="usuario.avatar_user" style="width: 140px; height: 140px">
           <button>Editar Aluno</button>
         </div>
       </section>
-    </div>
   </q-page>
 </template>
 
