@@ -1,3 +1,5 @@
+<a href="https://imgur.com/CjobSWc"><img src="https://imgur.com/CjobSWc.png" title="source: imgur.com" /></a>
+
 # Quasar Supabase Estoque
 
 A Project with Quasar 2.6.0, Vue 3.0.0, Supabase 2.39.0 and Node 18.17.0
