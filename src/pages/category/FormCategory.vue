@@ -37,16 +37,18 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import {
+  computed, onMounted, ref, reactive,
+} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import useApiSupabase from 'src/composables/UseApiSupabase';
 import useNotify from 'src/composables/UseNotify';
 
 import { validateText } from 'src/utils/ValidateForm';
 
-let category = {};
-
 const table = 'category';
+
+let category = reactive({});
 
 const form = ref({
   name: '',
