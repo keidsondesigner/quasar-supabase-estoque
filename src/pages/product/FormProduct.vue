@@ -1,9 +1,9 @@
 <template>
   <q-page padding class="container__page">
     <q-form
-    class="q-form row justify-center"
-    style="max-width: 560px;"
-    @submit.prevent="handleSubmit"
+      class="q-form row justify-center"
+      style="max-width: 560px;"
+      @submit.prevent="handleSubmit"
     >
       <h1 class="text-h6 text-center">
         Formulário de Produto
@@ -95,8 +95,6 @@ const { notifySuccess, notifyError } = useNotify();
 
 const table = 'product';
 
-// const products = reactive({});
-
 const optionsCategories = ref([]);
 
 const loading = ref(true);
@@ -114,10 +112,10 @@ const imgFile = ref([]);
 
 const textRules = validateText('Nome do produto', 4);
 
-// Verificando se um parâetro "id" existe na ulr da rota,
-const isUpdate = computed(() => route.params.id);
+// Verificando se um parâmetro "id" existe na ulr da rota,
+const isUpdateId = computed(() => route.params.id);
 
-// Buscando todas as categorias no Supabase, na tabela "category";
+// Buscando todas as categorias na tabela "category" do Supabase;
 // onde  "optionsCategories.value"  recebe o retorno dos dados;
 async function handleListCategories() {
   try {
@@ -128,10 +126,10 @@ async function handleListCategories() {
   }
 }
 
-// Recuperando categoria pelo parâmetro "id" para editar;
+// Recuperando produto pelo parâmetro "id" para editar;
 async function handleProductGetById(id) {
   try {
-    // Atualizando o input do formulário com a categoira recuperada;
+    // Atualizando o input do formulário com o produto recuperado;
     form.value = await getById(table, id);
   } catch (error) {
     notifyError(error.message);
@@ -145,16 +143,15 @@ async function handleSubmit() {
       form.value.img_url = imgUrl;
     }
 
-    if (isUpdate.value) {
-      await update(table, form.value); // Atualizando categoria editada no Supabase;
+    if (isUpdateId.value) {
       notifySuccess('Produto editado com sucesso!');
-      router.push({ name: 'list-products' });
+      await update(table, form.value); // Editando e atualizando produto no Supabase;
     } else {
       notifySuccess('Produto cadastrada com sucesso!');
-      await post(table, form.value); // Salvando categoria no Supabase;
+      await post(table, form.value); // Adicionando novo produto e Salvando produto no Supabase;
     }
-    // Em caso de sucesso, ao editar ou salvar uma categoria,
-    // vou redirecionar para minha lista de categorias;
+    // Em caso de sucesso, ao editar ou salvar uma produto,
+    // vou redirecionar para minha lista de produtos;
     router.push({ name: 'list-products' });
   } catch (error) {
     notifyError(error.message);
@@ -166,8 +163,8 @@ onMounted(() => {
   // vou chamar meu método handleProductGetById() se o parâmetro "id" existir na ulr da rota;
 
   // Se existir um parâmetro "id" na ulr da rota;
-  if (isUpdate.value) {
-    handleProductGetById(isUpdate.value); // Minha funcao vai Receber o parâmetro "id" se existir;
+  if (isUpdateId.value) {
+    handleProductGetById(isUpdateId.value); // Minha funcao vai Receber o parâmetro "id" se existir;
   }
   handleListCategories();
 });
